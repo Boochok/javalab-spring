@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:+'
+    }
+}
+
 group = 'com.epam.javalab'
 version = '1.0-SNAPSHOT'
 
@@ -12,6 +21,9 @@ repositories {
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
+
+// also you need to add "gdju" life template to dependencies block
+
 
 dependencies {
     compile 'org.springframework:spring-context:+',
