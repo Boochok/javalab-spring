@@ -33,10 +33,10 @@
         <constructor-arg name="id" value="1"/>
         <constructor-arg name="name" value="John Smith"/>
         <constructor-arg name="country" ref="country"/>
-        <!--<constructor-arg name="age" value="35"/>-->
-        <!--<constructor-arg name="height" value="1.78"/>-->
-        <!--<constructor-arg name="isProgrammer" value="true"/>-->
-        <!--<constructor-arg name="contacts" ref="contacts"/>-->
+        <constructor-arg name="age" value="35"/>
+        <constructor-arg name="height" value="1.78"/>
+        <constructor-arg name="isProgrammer" value="true"/>
+        <constructor-arg name="contacts" ref="contacts"/>
     </bean>
 
     <bean id="country" class="lab.model.SimpleCountry">
@@ -45,12 +45,12 @@
         <constructor-arg name="codeName" value="RU"/>
     </bean>
 
-    <!--<util:list id="contacts" value-type="java.lang.String">-->
-        <!--<bean class="java.lang.String">-->
-            <!--<constructor-arg value="222-33-22"/>-->
-        <!--</bean>-->
-        <!--<bean class="java.lang.String">-->
-            <!--<constructor-arg value="jkhafg@kjhsd.ru"/>-->
-        <!--</bean>-->
-    <!--</util:list>-->
+    <util:list id="contacts" value-type="java.lang.String">
+        <bean class="java.lang.String">
+            <constructor-arg value="222-33-22"/>
+        </bean>
+        <bean class="java.lang.String">
+            <constructor-arg value="jkhafg@kjhsd.ru"/>
+        </bean>
+    </util:list>
 </beans>
