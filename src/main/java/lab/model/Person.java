@@ -9,9 +9,9 @@ public interface Person {
     String getLastName();
     Country getCountry();
     int getAge();
-//    float getHeight();
-//    boolean isProgrammer();
-//    boolean isBroke();
+    float getHeight();
+    boolean isProgrammer();
+    boolean isBroke();
     List<Contact> getContacts();
 
     default String getName() {
