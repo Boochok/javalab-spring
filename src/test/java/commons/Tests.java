@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Tests {
     public static String APPLICATION_CONTEXT_XML_FILE_NAME =
-            "application-context.xml";
+            "ioc.xml";
 
     public static UsualPerson getExpectedPerson() {
         return new UsualPerson(
