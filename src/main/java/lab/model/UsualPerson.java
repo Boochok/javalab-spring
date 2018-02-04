@@ -1,12 +1,13 @@
 package lab.model;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Value
-@Component("person")
+@Data
+@AllArgsConstructor
 public class UsualPerson implements Person {
     private int id;
     private String firstName;

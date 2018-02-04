@@ -13,6 +13,7 @@ public interface Person {
     boolean isProgrammer();
     boolean isBroke();
     List<Contact> getContacts();
+    Person setBroke(boolean isBroke);
 
     default String getName() {
         return format("%s %s", getFirstName(), getLastName());

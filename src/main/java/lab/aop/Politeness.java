@@ -19,14 +19,17 @@ public class Politeness {
         System.out.printf("Is %s Good Enough?%n", retVal.getName());
     }
 
+    @AfterThrowing("execution(* sellSquishee(..))")
     public void sayYouAreNotAllowed() {
         System.out.println("Hmmm... \n");
     }
 
+    @After("execution(* sellSquishee(..))")
     public void sayGoodBye() {
         System.out.println("Good Bye! \n");
     }
 
+    @Around("execution(* sellSquishee(..))")
     public Object sayPoliteWordsAndSell(ProceedingJoinPoint pjp) throws Throwable {
         System.out.println("Hi! \n");
         Object retVal = pjp.proceed();
