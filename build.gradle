@@ -22,8 +22,6 @@ repositories {
 
 apply plugin: 'org.junit.platform.gradle.plugin'
 
-// also you need to add "gdju" life template to dependencies block
-
 configurations {
     testCompile.extendsFrom compileOnly
 }
@@ -34,7 +32,10 @@ test.testLogging.showStandardStreams = true
 dependencies {
     compile 'org.springframework:spring-context:+',
 
-            // todo: insert additional dependencies here
+            // AOP
+            'org.aspectj:aspectjrt:+',
+            'org.aspectj:aspectjweaver:+',
+            'aopalliance:aopalliance:+',
 
             'org.apache.logging.log4j:log4j-slf4j-impl:+',
             'javax.xml.bind:jaxb-api:+',
