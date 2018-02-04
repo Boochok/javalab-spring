@@ -12,7 +12,7 @@ import static commons.Tests.getExpectedPerson;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:application-context.xml")
+@ContextConfiguration("classpath:aop.xml")
 class SpringTCFAppTest {
 
     @Setter(onMethod = @__({@Autowired}))

@@ -18,7 +18,7 @@
           c:age="35"
           c:height="1.78"
           c:programmer="true"
-          c:broke="false"
+          c:broke="true"
           c:contacts-ref="contacts"/>
 
     <bean id="country" class="lab.model.SimpleCountry"

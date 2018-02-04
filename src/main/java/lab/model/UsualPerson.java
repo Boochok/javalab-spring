@@ -1,9 +1,11 @@
 package lab.model;
 
-import lombok.*;
+import lombok.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component("person")
 @Value
 public class UsualPerson implements Person {
     private int id;
