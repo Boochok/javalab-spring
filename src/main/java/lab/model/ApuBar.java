@@ -1,5 +1,8 @@
 package lab.model;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ApuBar implements Bar {
 
     @Override
