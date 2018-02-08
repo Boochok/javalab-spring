@@ -16,8 +16,7 @@ import java.util.List;
 
 public class Tests {
     public static String APPLICATION_CONTEXT_XML_FILE_NAME =
-            "aop.xml";
-
+            "ioc.xml";
     public static UsualPerson getExpectedPerson() {
         return new UsualPerson(
                 1,
@@ -27,7 +26,7 @@ public class Tests {
                 35,
                 1.78f,
                 true,
-                false,
+                true,
                 Arrays.asList(
                         new SimpleContact("TELEPHONE", "222-33-22"),
                         new SimpleContact("EMAIL","asd@asd.ru")));

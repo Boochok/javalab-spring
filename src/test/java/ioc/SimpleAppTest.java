@@ -8,7 +8,7 @@ import static commons.Tests.APPLICATION_CONTEXT_XML_FILE_NAME;
 import static commons.Tests.getExpectedPerson;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SimpleAppTest {
+class SimpleAppTest {
     private BeanFactory context = new ClassPathXmlApplicationContext(
             APPLICATION_CONTEXT_XML_FILE_NAME);
 

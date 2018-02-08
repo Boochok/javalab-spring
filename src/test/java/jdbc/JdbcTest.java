@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:application-context.xml")
+@ContextConfiguration("classpath:jdbc.xml")
 public class JdbcTest{
 
 	@Autowired
@@ -26,7 +26,7 @@ public class JdbcTest{
 	
     private List<Country> expectedCountryList = new ArrayList<Country>();
     private List<Country> expectedCountryListStartsWithA = new ArrayList<Country>();
-    private Country countryWithChangedName = new SimpleCountry(1, "Russia", "RU");
+    private Country countryWithChangedName = new SimpleCountry(8, "Russia", "RU");
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -67,7 +67,7 @@ public class JdbcTest{
     private void initExpectedCountryLists() {
          for (int i = 0; i < CountryDao.COUNTRY_INIT_DATA.length; i++) {
              String[] countryInitData = CountryDao.COUNTRY_INIT_DATA[i];
-             Country country = new SimpleCountry(i, countryInitData[0], countryInitData[1]);
+             Country country = new SimpleCountry(i+1, countryInitData[0], countryInitData[1]);
              expectedCountryList.add(country);
              if (country.getName().startsWith("A")) {
                  expectedCountryListStartsWithA.add(country);

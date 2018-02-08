@@ -3,6 +3,7 @@ package aop;
 import lab.model.ApuBar;
 import lab.model.Bar;
 import lab.model.Person;
+import lombok.Setter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,16 +19,17 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 @ContextConfiguration("classpath:aop.xml")
 class AopAspectJTest {
 
-    @Autowired
+    @Setter(onMethod = @__(@Autowired))
     private Bar bar;
 
-    @Autowired
+    @Setter(onMethod = @__(@Autowired))
     private Person person;
 
     private String out;
 
     @BeforeEach
     void setUp() throws Exception {
+        person.withBroke(false);
         out = fromSystemOut(() -> bar.sellSquishee(person));
     }
 
