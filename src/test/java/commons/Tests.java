@@ -26,7 +26,7 @@ public class Tests {
                 35,
                 1.78f,
                 true,
-                true,
+                false,
                 Arrays.asList(
                         new SimpleContact("TELEPHONE", "222-33-22"),
                         new SimpleContact("EMAIL","asd@asd.ru")));

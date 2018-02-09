@@ -26,7 +26,7 @@ class AopAspectJExceptionTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        person.withBroke(true);
+        person = person.withBroke(true);
     }
 
     @Test

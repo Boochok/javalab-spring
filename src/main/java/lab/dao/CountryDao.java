@@ -1,7 +1,5 @@
 package lab.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import lab.model.Country;
@@ -10,17 +8,18 @@ import lab.model.SimpleCountry;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-public class CountryDao extends JdbcDaoSupport {
-	private static final String LOAD_COUNTRIES_SQL = "insert into country (name, code_name) values ('%s', '%s')";
+public class CountryDao extends NamedParameterJdbcDaoSupport {
 
-	private static final String GET_ALL_COUNTRIES_SQL = "select * from country";
-	private static final String GET_COUNTRIES_BY_NAME_SQL = "select * from country where name like :name";
-	private static final String GET_COUNTRY_BY_NAME_SQL = "select * from country where name = '%s'";
-	private static final String GET_COUNTRY_BY_CODE_NAME_SQL = "select * from country where code_name = '%s'";
+	private static final String LOAD_COUNTRIES_SQL = "INSERT INTO country (name, code_name) VALUES ('%s', '%s')";
+
+	private static final String GET_ALL_COUNTRIES_SQL = "SELECT * FROM country";
+	private static final String GET_COUNTRIES_BY_NAME_SQL = "SELECT * FROM country WHERE name LIKE :name";
+	private static final String GET_COUNTRY_BY_NAME_SQL = "SELECT * FROM country WHERE name = '%s'";
+	private static final String GET_COUNTRY_BY_CODE_NAME_SQL = "SELECT * FROM country WHERE code_name = '%s'";
 
 	private static final String UPDATE_COUNTRY_NAME_SQL = "UPDATE country SET name='%s' WHERE code_name='%s'";
 

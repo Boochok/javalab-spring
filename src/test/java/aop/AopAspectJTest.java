@@ -29,7 +29,7 @@ class AopAspectJTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        person.withBroke(false);
+        person = person.withBroke(false);
         out = fromSystemOut(() -> bar.sellSquishee(person));
     }
 
