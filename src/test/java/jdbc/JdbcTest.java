@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class JdbcTest{
 
 	@Autowired
-	private CountryDao countryDao;
+	private CountryDao jdbcCountryDao;
 	
     private List<Country> expectedCountryList = new ArrayList<Country>();
     private List<Country> expectedCountryListStartsWithA = new ArrayList<Country>();
@@ -31,14 +31,14 @@ public class JdbcTest{
     @BeforeEach
     public void setUp() throws Exception {
         initExpectedCountryLists();
-        countryDao.loadCountries();
+        jdbcCountryDao.loadCountries();
     }
 
     
     @Test
     @DirtiesContext
-    public void testCountryList() {
-        List<Country> countryList = countryDao.getCountryList();
+    void testCountryList() {
+        List<Country> countryList = jdbcCountryDao.getCountries();
         assertNotNull(countryList);
         assertEquals(expectedCountryList.size(), countryList.size());
         for (int i = 0; i < expectedCountryList.size(); i++) {
@@ -48,8 +48,8 @@ public class JdbcTest{
 
     @Test
     @DirtiesContext
-    public void testCountryListStartsWithA() {
-        List<Country> countryList = countryDao.getCountryListStartWith("A");
+    void testCountryListStartsWithA() {
+        List<Country> countryList = jdbcCountryDao.getCountriesStartWith("A");
         assertNotNull(countryList);
         assertEquals(expectedCountryListStartsWithA.size(), countryList.size());
         for (int i = 0; i < expectedCountryListStartsWithA.size(); i++) {
@@ -59,9 +59,9 @@ public class JdbcTest{
 
     @Test
     @DirtiesContext
-    public void testCountryChange() {
-        countryDao.updateCountryName("RU", "Russia");
-        assertEquals(countryWithChangedName, countryDao.getCountryByCodeName("RU"));
+    void testCountryChange() {
+        jdbcCountryDao.updateCountryName("RU", "Russia");
+        assertEquals(countryWithChangedName, jdbcCountryDao.getCountryByCodeName("RU"));
     }
 
     private void initExpectedCountryLists() {

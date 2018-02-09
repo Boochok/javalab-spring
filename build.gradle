@@ -12,7 +12,7 @@ version = '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 9
 
 repositories {
     mavenCentral()
@@ -40,12 +40,15 @@ dependencies {
             // JDBC
             'org.springframework:spring-jdbc:+',
 
+            // ORM
+            'org.springframework:spring-orm:+',
+            'org.hibernate:hibernate-spatial:+',
+            'org.hibernate:hibernate-validator:+',
+            'org.hibernate:hibernate-java8:+',
+
             'org.apache.logging.log4j:log4j-slf4j-impl:+',
             'javax.xml.bind:jaxb-api:+',
             'io.vavr:vavr:+'
-
-    // H2
-    testRuntime 'com.h2database:h2:+'
 
     compileOnly 'org.projectlombok:lombok:+',
             'edu.washington.cs.types.checker:checker-framework:+'
@@ -55,7 +58,9 @@ dependencies {
             'org.mockito:mockito-core:+',
             'org.springframework:spring-test:+'
 
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine:+'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:+',
+            // H2
+            'com.h2database:h2:+'
 
     // To avoid compiler warnings about @API annotations in JUnit code
     testCompileOnly 'org.apiguardian:apiguardian-api:+'
