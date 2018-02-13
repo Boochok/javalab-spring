@@ -1,14 +1,18 @@
 package lab.model;
 
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.Wither;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Value
+@Data
 @Entity
+@Table(name = "person")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Component("person")
 public class UsualPerson implements Person {
 
@@ -28,4 +32,5 @@ public class UsualPerson implements Person {
     @Wither
     private boolean broke;
     private List<Contact> contacts;
+
 }
