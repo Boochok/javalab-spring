@@ -1,7 +1,8 @@
 package lab.model;
 
 public interface Country {
-    int getId();
+    Long getId();
     String getName();
     String getCodeName();
+    Country setId(Long save);
 }

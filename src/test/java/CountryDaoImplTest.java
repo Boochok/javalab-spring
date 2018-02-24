@@ -1,7 +1,8 @@
 import lab.dao.CountryDao;
-import lab.dao.CountryNotFoundException;
 import lab.model.Country;
 import lab.model.SimpleCountry;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.NonFinal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,42 +12,57 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Illustrates basic use of Hibernate as a JPA provider.
  */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:orm.xml")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class CountryDaoImplTest {
 
-    private Country exampleCountry = new SimpleCountry(1, "Australia", "AU");
+    private static final Country EXAMPLE_COUNTRY = new SimpleCountry(1L, "Australia", "AU");
 
-    @Autowired
-    private CountryDao jdbcCountryDao;
+    final CountryDao countryDao;
+
+    @NonFinal
+    int size;
+
 
     @Test
     void testSaveCountry() {
-
-        jdbcCountryDao.save(exampleCountry);
-
-        List<Country> countryList = jdbcCountryDao.getCountries();
-        assertEquals(1, countryList.size());
-        assertEquals(exampleCountry, countryList.get(0));
+        countryDao.save(EXAMPLE_COUNTRY);
+        size++;
+        List<Country> countries = countryDao.getCountries();
+        assertEquals(1, countries.size());
+        assertEquals(EXAMPLE_COUNTRY, countries.get(0));
     }
 
     @Test
-    void testGtAllCountries() {
-
-        jdbcCountryDao.save(new SimpleCountry(1, "Canada", "CA"));
-
-        List<Country> countryList = jdbcCountryDao.getCountries();
-        assertEquals(2, countryList.size());
+    void testGetAllCountries() {
+        countryDao.save(new SimpleCountry(1L, "Canada", "CA"));
+        size++;
+        List<Country> countries = countryDao.getCountries();
+        assertEquals(size, countries.size());
     }
 
     @Test
-    void testGetCountryByName() throws CountryNotFoundException {
-        Country country = jdbcCountryDao.getCountryByName("Australia");
-        assertEquals(exampleCountry, country);
+    void testGetCountryByCodeName(){
+        countryDao.save(new SimpleCountry(1L, "Australia", "AU"));
+        size++;
+        Country country = countryDao.getCountryByCodeName("AU");
+        assertEquals(EXAMPLE_COUNTRY, country);
     }
 
+    @Test
+    void updateCountry(){
+        countryDao.save(new SimpleCountry(1L, "Russia", "RU"));
+        size++;
+        List<Country> countries = countryDao.getCountriesStartWith("R");
+        assertEquals("Russia", countries.get(0).getName());
+        countryDao.updateCountryName("RU", "Russian Federation");
+        countries = countryDao.getCountries();
+        assertNotEquals("Russia", countries.get(0).getName());
+    }
 }

@@ -2,32 +2,36 @@ package lab.dao;
 
 import lab.model.Country;
 import lab.model.SimpleCountry;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository
 public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements CountryDao {
 
-    //language=h2
-    private static final String LOAD_COUNTRIES_SQL = "INSERT INTO country (name, code_name) VALUES ('%s', '%s')";
-    //language=h2
     private static final String GET_ALL_COUNTRIES_SQL = "SELECT id, name, code_name FROM country";
-    //language=h2
     private static final String GET_COUNTRIES_BY_NAME_SQL = "SELECT id, name, code_name FROM country WHERE name LIKE :name";
-    //language=h2
     private static final String GET_COUNTRY_BY_NAME_SQL = "SELECT id, name, code_name FROM country WHERE name = '%s'";
-    //language=h2
     private static final String GET_COUNTRY_BY_CODE_NAME_SQL = "SELECT id, name, code_name FROM country WHERE code_name = '%s'";
-    //language=h2
     private static final String UPDATE_COUNTRY_NAME_SQL = "UPDATE country SET name='%s' WHERE code_name='%s'";
+    private static final String SAVE_COUNTRY_SQL = "INSERT INTO country (name, code_name) VALUES (?, ?)";
 
     private static final RowMapper<Country> COUNTRY_ROW_MAPPER = (resultSet, i) ->
             new SimpleCountry(
-                    resultSet.getInt("id"),
+                    resultSet.getLong("id"),
                     resultSet.getString("name"),
                     resultSet.getString("code_name"));
 
@@ -38,24 +42,24 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
 
     @Override
     public List<Country> getCountriesStartWith(String name) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name + "%");
         return getNamedParameterJdbcTemplate()
                 .query(GET_COUNTRIES_BY_NAME_SQL,
-                        Map.of("name", name + "%"),
+                        map,
                         COUNTRY_ROW_MAPPER);
     }
 
     @Override
-    public void updateCountryName(String codeName, String newCountryName) {
-        getJdbcTemplate().execute(
-                String.format(UPDATE_COUNTRY_NAME_SQL, newCountryName, codeName));
+    public int updateCountryName(String codeName, String newCountryName) {
+        return getJdbcTemplate()
+                .update(String.format(UPDATE_COUNTRY_NAME_SQL, newCountryName, codeName));
     }
 
     @Override
     public void loadCountries() {
-        for (String[] countryData : COUNTRY_INIT_DATA) {
-            getJdbcTemplate().execute(
-                    String.format(LOAD_COUNTRIES_SQL, countryData[0], countryData[1]));
-        }
+        for (String[] countryData : COUNTRY_INIT_DATA)
+            save(countryData[0], countryData[1]);
     }
 
     @Override
@@ -80,7 +84,28 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
     }
 
     @Override
-    public void save(Country country) {
-        // TODO: 09/02/2018 implement it! 
+    public Country save(Country country) {
+        assert country.getId() == null;
+        return country.setId(
+                save(country.getName(), country.getCodeName()));
+    }
+
+    public long save(String name, String codeName) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        getJdbcTemplate().update(
+                connection -> {
+                    PreparedStatement ps = connection.prepareStatement(
+                            SAVE_COUNTRY_SQL, Statement.RETURN_GENERATED_KEYS);
+                    ps.setString(1, name);
+                    ps.setString(2, codeName);
+                    return ps;
+                },
+                keyHolder);
+        return keyHolder.getKey().intValue();
+    }
+
+    @Override
+    public int deleteAllCountries() {
+        return 0;
     }
 }

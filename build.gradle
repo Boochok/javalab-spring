@@ -12,7 +12,7 @@ version = '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 9
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -45,6 +45,8 @@ dependencies {
             'org.hibernate:hibernate-spatial:+',
             'org.hibernate:hibernate-validator:+',
             'org.hibernate:hibernate-java8:+',
+//            'org.hibernate:hibernate-core:5.2.13.Final',
+
 
             'org.apache.logging.log4j:log4j-slf4j-impl:+',
             'javax.xml.bind:jaxb-api:+',
