@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <import resource="jdbc.xml"/>
+    <context:component-scan base-package="lab.service"/>
 
+    <bean name="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+
+    <tx:annotation-driven/>
+
+    <bean name="countryService" class="lab.service.CountryServiceImpl">
+        <constructor-arg ref="jdbcCountryDao"/>
+    </bean>
 </beans>
